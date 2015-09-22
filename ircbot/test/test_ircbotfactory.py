@@ -12,3 +12,7 @@ class TestFactory(unittest.TestCase):
 
     def test_create_should_return_instance_of_ircbot(self):
         self.assertIsInstance(self.__ircbotfactory.create(), IrcBot)
+
+
+if __name__ == '__main__':
+    unittest.main()
