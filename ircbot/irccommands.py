@@ -16,8 +16,8 @@ class IrcCommands(object):
     def ping(self, server):
         return self.COM_PING + ' %s\r\n' % server
 
-    def pong(self, server):
-        return self.COM_PONG + ' %s\r\n' % server
+    def pong(self, data):
+        return self.COM_PONG + ' %s\r\n' % data
 
     def privmsg(self, target, message):
         return self.COM_PRIVMSG + ' %s :%s\r\n' % (target, message)

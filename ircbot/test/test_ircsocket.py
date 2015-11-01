@@ -32,7 +32,7 @@ class TestIrcSocket(unittest.TestCase):
         self.__socketMock.recv.return_value = expected
         content = self.__ircSocket.receive()
         self.assertEqual(content, 'Hello World', 'Expected: %s, got: %s' % (expected, content))
-        self.__socketMock.recv.assert_called_once_with(2048)
+        self.__socketMock.recv.assert_called_once_with(4096)
 
 
 if __name__ == '__main__':

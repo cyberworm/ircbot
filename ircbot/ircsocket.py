@@ -14,5 +14,5 @@ class IrcSocket(object):
     def send(self, content):
         self.__socket.send(content)
 
-    def receive(self):
-        return self.__socket.recv(2048)
+    def receive(self, size=4096):
+        return self.__socket.recv(size)

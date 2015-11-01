@@ -21,6 +21,12 @@ class IrcBot(object):
     def join(self, channel):
         self.__ircsocket.send(self.__irccommands.join(channel))
 
+    def pong(self, data):
+        self.__ircsocket.send(self.__irccommands.pong(data))
+
+    def receive(self):
+        return self.__ircsocket.receive()
+
     def say(self, target, message):
         self.__ircsocket.send(self.__irccommands.privmsg(target, message))
 
