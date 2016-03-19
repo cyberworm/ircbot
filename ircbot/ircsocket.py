@@ -1,3 +1,7 @@
+from exceptions import TimeoutError
+from socket import timeout
+
+
 class IrcSocket(object):
     def __init__(self, socket):
         self.__socket = socket
@@ -15,4 +19,10 @@ class IrcSocket(object):
         self.__socket.send(content)
 
     def receive(self, size=4096):
-        return self.__socket.recv(size)
+        try:
+            return self.__socket.recv(size)
+        except timeout as e:
+            raise TimeoutError(e.message)
+
+    def set_timeout(self, seconds):
+        self.__socket.settimeout(seconds)

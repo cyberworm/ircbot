@@ -24,7 +24,8 @@ class IrcBot(object):
     def pong(self, data):
         self.__ircsocket.send(self.__irccommands.pong(data))
 
-    def receive(self):
+    def receive(self, timeout=300):
+        self.__ircsocket.set_timeout(timeout)
         return self.__ircsocket.receive()
 
     def say(self, target, message):

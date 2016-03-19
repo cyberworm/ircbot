@@ -2,6 +2,7 @@ import socket
 import unittest
 from mock import Mock
 from ircbot.ircsocket import IrcSocket
+from ircbot.exceptions import TimeoutError
 
 
 class TestIrcSocket(unittest.TestCase):
@@ -33,6 +34,21 @@ class TestIrcSocket(unittest.TestCase):
         content = self.__ircSocket.receive()
         self.assertEqual(content, 'Hello World', 'Expected: %s, got: %s' % (expected, content))
         self.__socketMock.recv.assert_called_once_with(4096)
+
+    def test_receive_should_call_recv_socket_method_and_raise_TimeoutError(self):
+        expected = 'some timeout'
+        self.__socketMock.recv.side_effect = socket.timeout('some timeout')
+
+        try:
+            self.__ircSocket.receive()
+        except TimeoutError as timeout:
+            self.assertEqual(timeout.message, expected, 'Expected: %s, got: %s' % (expected, timeout.message))
+
+        self.__socketMock.recv.assert_called_once_with(4096)
+
+    def test_set_timeout_should_call_set_timeout_socket_method_with_timeout_in_seconds(self):
+        self.__ircSocket.set_timeout(300)
+        self.__socketMock.settimeout.assert_called_once_with(300)
 
 
 if __name__ == '__main__':

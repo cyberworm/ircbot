@@ -70,11 +70,12 @@ class TestIrcBot(unittest.TestCase):
         self.__ircCommandsMock.pong.assert_called_once_with('abcdef')
         self.__ircSocketMock.send.assert_called_once_with(pongcmd)
 
-    def test_receive_should_call_receive_ircsocket_method(self):
+    def test_receive_should_call_timeout_and_receive_ircsocket_methods_with_default_timeout(self):
         expected = 'Hello World'
         self.__ircSocketMock.receive.return_value = expected
         content = self.__ircBot.receive()
         self.assertEqual(content, 'Hello World', 'Expected: %s, got: %s' % (expected, content))
+        self.__ircSocketMock.set_timeout.assert_called_once_with(300)
         self.__ircSocketMock.receive.assert_called_once_with()
 
     def test_say_should_call_send_ircsocket_method_with_privmsg_command(self):
